@@ -1,0 +1,1 @@
+all the notes of my algorithm's study, and the code of playing with leetcode
