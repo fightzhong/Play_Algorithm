@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class IndexMinHeap<T extends Comparable<T>> {
-	private int[] heap;			// 堆数据
+	private int[] heap;			     // 堆数据
 	private T[] data;				// 用户可见的数据, 即用户实际操作的数据
 	private int size;				// 堆中的元素个数
 	
