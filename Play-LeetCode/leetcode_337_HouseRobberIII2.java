@@ -1,9 +1,16 @@
+import java.util.HashMap;
+
 /**
- * 这个版本能得出正确结果, 但是时间复杂度没有达到要求, 因为没有记录已经得到的信息, 从而多次递归同一个子树
+ * .在上一个版本的基础上进行了优化, 利用HashMap来记录已经递归的子树
  */
-public class leetcode_337_HouseRobberIII {
+public class leetcode_337_HouseRobberIII2 {
+    public HashMap<TreeNode, Integer> hasRob = new HashMap<>();
     // 偷取当前节点, 或者偷取当前节点的孩子节点
     public int rob(TreeNode root) {
+        if ( hasRob.containsKey( root ) ) {
+            return hasRob.get( root );
+        }
+        
         if ( root == null ) {
             return 0;
         }
@@ -18,6 +25,7 @@ public class leetcode_337_HouseRobberIII {
         int l = rob( root.left );
         int r = rob( root.right );
         
+        hasRob.put( root, Math.max( l + r, cur ) );
         return Math.max( l + r, cur );
     }
     
