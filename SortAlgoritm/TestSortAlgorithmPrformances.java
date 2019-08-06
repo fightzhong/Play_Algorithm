@@ -9,9 +9,9 @@ import sort.SortInterface;
  * @author 
  */
 public class TestSortAlgorithmPrformances {
-	private static int sortNumber = 1000000;
+	private static int sortNumber = 100000;
 	private static int uperBorder = 10000;
-	
+
 	public static void main(String[] args) {
 		Random ran = new Random();
 
@@ -31,7 +31,7 @@ public class TestSortAlgorithmPrformances {
 //		sortFun(new InsertionSort(), arr);
 		
 		// BubbleSort
-//		sortFun(new BubbleSort(), arr);
+		sortFun(new BubbleSort(), arr);
 		
 		// ShellSort
 //		sortFun(new ShellSort(), arr);
@@ -39,15 +39,15 @@ public class TestSortAlgorithmPrformances {
 		// MergeSort
 //		sortFun(new mergesort.MergeSortOriginal(), arr);
 //		sortFun(new MergeSort(), arr);
-		sortFun(new MergeSortOptimized(), arr);
+// 		sortFun(new MergeSortOptimized(), arr);
 //		sortFun(new MergeSortBottomToUp(), arr);
 		
 		// QuickSort
-		sortFun(new QuickSort(), arr);
+		// sortFun(new QuickSort(), arr);
 		
 		
 		// HeapSort
-		sortFun(new MinHeap<Integer>(), arr);
+		// sortFun(new MinHeap<Integer>(), arr);
 		
 	}
 	

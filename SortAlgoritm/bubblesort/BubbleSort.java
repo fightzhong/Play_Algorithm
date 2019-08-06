@@ -18,9 +18,9 @@ public class BubbleSort implements SortInterface{
 			
 			for (int j = 0; j < (arr.length - 1 - i); j++) {
 				if (arr[j].compareTo(arr[j + 1]) > 0) {
-					Swap.swap(arr, j, j + 1);
-				}
+				Swap.swap(arr, j, j + 1);
 			}
+		}
 			
 		}
 		
