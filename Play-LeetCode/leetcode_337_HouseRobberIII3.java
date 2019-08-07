@@ -8,72 +8,34 @@ import java.util.HashMap;
  *      v(node)表示node所在的这个房子的钱数
  *      状态转移方程:  
  *                   - 偷node : v(node) + f(node.left.left) + f(node.left.right) + f(node.right.left) + f(node.right.right)
- *          f(node)
  *                   - 不偷node: f(node.left) + f(node.right)
- *       临界点: 直接能得到的f(node)一定是叶子节点, 我们通过后序遍历, 先访问左右叶子节点, 再访问当前节点的方式, 把叶子节点的f(node)进行初始化, 然后向上
- *                回溯, 当node.left.left不存在的时候则f(node.left.left) 为0                 
- *                   
  */
 public class leetcode_337_HouseRobberIII3 {
-    HashMap<TreeNode, Integer> visited = new HashMap<TreeNode, Integer>();
+    private Map<TreeNode, Integer> memo = new HashMap<>();
     public int rob(TreeNode root) {
         if ( root == null ) {
             return 0;
         }
-        traverseTree( root );
-        return visited.get( root );
-    }
 
-    // 对树进行后序遍历, 先访问叶子节点, 再访问父亲节点
-    public void traverseTree (TreeNode node) {
-        if ( node == null ) {
-            return;
+        if ( memo.containsKey( root ) ) {
+            return memo.get( root );
         }
-        
-        // 找到一个叶子节点
-        if ( node.left == null && node.right == null ) {
-            visited.put( node, node.val );
-            return;
-        }
-        
-        traverseTree( node.left );
-        traverseTree( node.right );
-        
-        /*************状态转移方程的代码实现****************/
-        // 偷node节点
-        int money1 = node.val;
-        if ( node.left != null ) {
-            if ( node.left.left != null ) {
-                money1 += visited.get( node.left.left );
-            }
-            
-            if ( node.left.right != null ) {
-                money1 += visited.get( node.left.right );
-            }
-        }
-        
-        if ( node.right != null ) {
-            if ( node.right.left != null ) {
-                money1 += visited.get( node.right.left );
-            }
-            
-            if ( node.right.right != null ) {
-                money1 += visited.get( node.right.right );
-            }
-        }
-        
-        // 不偷node节点
-        int money2 = 0;
-        if ( node.left != null ) {
-            money2 += visited.get( node.left );
-        }
-        
-        if ( node.right != null ) {
-            money2 += visited.get( node.right );
-        }
-        
-        int maxMoney = Math.max( money1, money2 );
-        visited.put( node, maxMoney );
+
+        // 偷取以root为根节点的房子, 有两种情况, 偷取该房子, 不偷取该房子
+
+        // 情况一: 偷取该房子 = 该房子的价值 + 该房子孙子节点的价值
+        int leftSon = root.left == null ? 0 : rob( root.left.left ) + rob( root.left.right );
+        int rightSon = root.right == null ? 0 : rob( root.right.left ) + rob( root.right.right );
+        int val1 = leftSon + rightSon + root.val;
+
+        // 情况二: 不偷取该房子
+        int val2 = rob( root.left ) + rob( root.right );
+
+        // 偷取以root为根节点的房子能获取的最大价值
+        int res = Math.max( val1, val2 );
+        memo.put( root, res );
+
+        return memo.get( root );
     }
 }
 

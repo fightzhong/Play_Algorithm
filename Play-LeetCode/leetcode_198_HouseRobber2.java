@@ -10,22 +10,20 @@ public class leetcode_198_HouseRobber2 {
         if ( nums.length == 0 ) {
             return 0;
         }
-        
-        if ( nums.length == 1 ) {
-            return nums[0];
-        }
-        
-        robMoney = new int[nums.length];
-        Arrays.fill( robMoney, 0 );
 
-        for ( int i = 0; i < nums.length; i++ ) {
-            // 当前正在偷第i家, 等于前i - 2或者i - 3家的钱加上当前这一家的钱
-            int m1 = i - 2 >= 0 ? nums[i] + robMoney[i - 2] : nums[i];
-            int m2  = i - 3 >= 0 ? nums[i] + robMoney[i - 3] : nums[i];
-            robMoney[i] = Math.max( m1, m2 );
+        int[] memo = new int[nums.length];  // 记忆偷取前n个房子能获得的最大值
+        memo[0] = nums[0];
+
+        for ( int i = 1; i < nums.length; i ++ ) {
+            // 考虑偷取前i个房子能获得的最大收益(有两种情况, 偷当前的房子, 不偷当前的房子)
+
+            // 偷取前i-2个房子加上当前的房子
+            int m1 = i - 2 >= 0 ? memo[i - 2] + nums[i] : nums[i];
+            // 不偷当前的房子, 偷取前i-1个房子
+            int m2 = memo[i - 1];
+            memo[i] = Math.max( m1, m2 );
         }
 
-        
-        return Math.max( robMoney[nums.length - 1], robMoney[nums.length - 2] ) ;
+        return memo[memo.length - 1];
     }
 }
