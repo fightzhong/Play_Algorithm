@@ -1,4 +1,4 @@
-package com.fightzhong.I_leetcode;
+package 动态规划._01背包问题;
 
 /**
  * 优化二: 通过自底向上的实现来看, 我们知道每遍历一行只需要上一行的数据, 而对于之前
@@ -35,6 +35,6 @@ public class knapsack01_2 {
 			}
 		}
 
-		return memo[( i - 1 ) % 2][capacity];
+		return memo[( weight.length - 1 ) % 2][capacity];
 	}
 }
